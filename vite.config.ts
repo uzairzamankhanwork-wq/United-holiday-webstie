@@ -28,7 +28,7 @@ function serverBundlePlugin(): Plugin {
         entryPoints: [path.resolve(__dirname, "dist", "app.js")],
         bundle: true,
         platform: "node",
-        target: "node22",
+        target: "node20",
         format: "esm",
         outfile: path.resolve(__dirname, "dist", "server.bundle.mjs"),
         packages: "bundle",
