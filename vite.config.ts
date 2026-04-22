@@ -2,12 +2,6 @@ import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import * as esbuild from "esbuild";
-import { tscWatchPlugin } from "./dev-tools/src/vite-tsc-plugin";
-import sourceMapperPlugin from "./source-mapper/src/index";
-import { devToolsPlugin } from "./dev-tools/src/vite-plugin";
-import { fullStoryPlugin } from "./fullstory-plugin";
-import { errorInterceptorPlugin } from "./dev-tools/src/vite-error-interceptor";
-import { mediaVersionsPlugin } from "./dev-tools/src/vite-media-versions-plugin";
 import apiRoutes from "vite-plugin-api-routes";
 
 function extractHostname(value: string): string {
@@ -78,26 +72,14 @@ export default defineConfig(({ mode }) => ({
   envPrefix: ["VITE_", "SITE_"],
 
   plugins: [
-  react({
-    babel: {
-      plugins: [sourceMapperPlugin]
-    }
-  }),
+  react(),
   apiRoutes({
     mode: "isolated",
     configure: "src/server/configure.js",
     dirs: [{ dir: "./src/server/api", route: "" }],
     forceRestart: mode === "development"
   }),
-  ...(mode === "development" ?
-  [
-  tscWatchPlugin(),
-  devToolsPlugin() as Plugin,
-  fullStoryPlugin(),
-  errorInterceptorPlugin(),
-  mediaVersionsPlugin() as Plugin] :
-
-  []),
+  ...(mode === "development" ? [] : []),
   serverBundlePlugin()],
 
 
