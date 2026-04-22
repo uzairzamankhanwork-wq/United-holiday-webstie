@@ -23,6 +23,28 @@ export const viteServerBefore = (server, viteServer) => {
   server.use(express.urlencoded({ extended: true }));
 };
 
+// CORS helper — allow calls from any vercel.app or custom domain
+function addCors(server) {
+  server.use((req, res, next) => {
+    const origin = req.headers.origin || '';
+    const allowed = [
+      'https://united-holidays-website.vercel.app',
+      'http://localhost:5173',
+      'http://localhost:3000',
+    ];
+    if (allowed.includes(origin) || origin.endsWith('.vercel.app')) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+    }
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(204);
+    }
+    next();
+  });
+}
+
 export const viteServerAfter = (server, viteServer) => {
   const errorHandler = (err, req, res, next) => {
     if (err instanceof Error) {
@@ -38,6 +60,7 @@ export const viteServerAfter = (server, viteServer) => {
 // ServerHook
 export const serverBefore = (server) => {
   normalizeCommerceApiBaseUrlEnv();
+  addCors(server);
 
   const shutdown = async (signal) => {
     console.log(`Got ${signal}, shutting down gracefully...`);

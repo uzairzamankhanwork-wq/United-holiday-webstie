@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Edit, Loader2, Plus, Trash2 } from 'lucide-react';
 import DetailedVisaEditor, { type VisaData } from './DetailedVisaEditor';
+import { apiFetch } from '@/lib/api';
 
 export default function VisaManager() {
   const [visas, setVisas] = useState<VisaData[]>([]);
@@ -18,7 +19,7 @@ export default function VisaManager() {
 
   const fetchVisas = async () => {
     try {
-      const response = await fetch('/api/admin/visas');
+      const response = await apiFetch('/admin/visas');
       const data = await response.json();
       if (data.success) {
         setVisas(data.visas);
@@ -52,7 +53,7 @@ export default function VisaManager() {
     }
 
     try {
-      const response = await fetch(`/api/admin/visas/${id}`, {
+      const response = await apiFetch(`/admin/visas/${id}`, {
         method: 'DELETE',
       });
 

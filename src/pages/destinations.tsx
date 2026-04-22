@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Phone, MessageCircle, MapPin, Calendar, Users, Star, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { apiFetch } from '@/lib/api';
 
 interface Destination {
   id: number;
@@ -30,7 +31,7 @@ export default function DestinationsPage() {
   useEffect(() => {
     const fetchDestinations = async () => {
       try {
-        const response = await fetch('/api/packages');
+        const response = await apiFetch('/packages');
         const data = await response.json();
         
         if (data.success) {

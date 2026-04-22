@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Phone, MessageCircle, Clock, Calendar, DollarSign, CheckCircle, ChevronLeft, FileText, Loader2 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { apiFetch } from '@/lib/api';
 
 interface Visa {
   id: number;
@@ -29,7 +30,7 @@ export default function VisaDetailPage() {
   useEffect(() => {
     const fetchVisa = async () => {
       try {
-        const response = await fetch('/api/visas');
+        const response = await apiFetch('/visas');
         const data = await response.json();
         
         if (data.success) {

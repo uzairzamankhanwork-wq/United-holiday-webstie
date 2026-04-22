@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useState, useEffect } from 'react';
+import { apiFetch } from '@/lib/api';
 
 interface Destination {
   id: number;
@@ -43,7 +44,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchDestinations = async () => {
       try {
-        const response = await fetch('/api/packages');
+        const response = await apiFetch('/packages');
         const data = await response.json();
         
         if (data.success) {
@@ -63,7 +64,7 @@ export default function HomePage() {
 
     const fetchVisas = async () => {
       try {
-        const response = await fetch('/api/visas');
+        const response = await apiFetch('/visas');
         const data = await response.json();
         
         if (data.success) {
@@ -100,7 +101,7 @@ export default function HomePage() {
 
     try {
       // Send to backend API (optional - for logging/email notifications)
-      await fetch('/api/contact', {
+      await apiFetch('/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

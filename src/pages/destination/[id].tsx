@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Phone, MessageCircle, MapPin, Clock, Users, Star, Check, X, ChevronLeft, Loader2 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { apiFetch } from '@/lib/api';
 
 interface Destination {
   id: number;
@@ -30,7 +31,7 @@ export default function DestinationDetailPage() {
   useEffect(() => {
     const fetchDestination = async () => {
       try {
-        const response = await fetch('/api/packages');
+        const response = await apiFetch('/packages');
         const data = await response.json();
         
         if (data.success) {

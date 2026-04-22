@@ -5,6 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Save, Loader2, Plus, Trash2 } from 'lucide-react';
+import { apiFetch } from '@/lib/api';
 
 interface HeroContent {
   title: string;
@@ -58,7 +59,7 @@ export default function HomepageContentManager() {
 
   const fetchHomepageContent = async () => {
     try {
-      const response = await fetch('/api/admin/homepage');
+      const response = await apiFetch('/admin/homepage');
       const result = await response.json();
       if (result.success && result.content) {
         setData(result.content);
@@ -73,7 +74,7 @@ export default function HomepageContentManager() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const response = await fetch('/api/admin/homepage', {
+      const response = await apiFetch('/admin/homepage', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),

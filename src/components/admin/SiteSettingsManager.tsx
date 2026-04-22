@@ -5,6 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Save, Loader2 } from 'lucide-react';
+import { apiFetch } from '@/lib/api';
 
 interface ContactInfo {
   phone: string;
@@ -65,7 +66,7 @@ export default function SiteSettingsManager() {
 
   const fetchSettings = async () => {
     try {
-      const response = await fetch('/api/admin/settings');
+      const response = await apiFetch('/admin/settings');
       const result = await response.json();
       if (result.success && result.settings) {
         setSettings(result.settings);
@@ -80,7 +81,7 @@ export default function SiteSettingsManager() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const response = await fetch('/api/admin/settings', {
+      const response = await apiFetch('/admin/settings', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(settings),

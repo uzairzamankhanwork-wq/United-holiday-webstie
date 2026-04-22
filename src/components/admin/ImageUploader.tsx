@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Upload, Loader2, X, Image as ImageIcon } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { apiFetch } from '@/lib/api';
 
 interface ImageUploaderProps {
   currentImage?: string;
@@ -48,7 +49,7 @@ export default function ImageUploader({
         setPreviewUrl(base64Data);
 
         // Upload to server
-        const response = await fetch('/api/admin/upload', {
+        const response = await apiFetch('/admin/upload', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useState } from 'react';
+import { apiFetch } from '@/lib/api';
 
 /**
  * Contact Page
@@ -30,7 +31,7 @@ export default function ContactPage() {
 
     try {
       // Send to backend API
-      await fetch('/api/contact', {
+      await apiFetch('/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

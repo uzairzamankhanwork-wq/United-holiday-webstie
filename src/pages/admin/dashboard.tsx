@@ -8,6 +8,7 @@ import PackageManager from '@/components/admin/PackageManager';
 import VisaManager from '@/components/admin/VisaManager';
 import HomepageContentManager from '@/components/admin/HomepageContentManager';
 import SiteSettingsManager from '@/components/admin/SiteSettingsManager';
+import { apiFetch } from '@/lib/api';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function AdminDashboard() {
 
     setSeeding(true);
     try {
-      const response = await fetch('/api/admin/seed', {
+      const response = await apiFetch('/admin/seed', {
         method: 'POST',
       });
       const data = await response.json();

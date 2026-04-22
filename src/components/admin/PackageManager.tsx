@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Edit, Loader2, Plus, Trash2 } from 'lucide-react';
 import DetailedPackageEditor, { type PackageData } from './DetailedPackageEditor';
+import { apiFetch } from '@/lib/api';
 
 export default function PackageManager() {
   const [packages, setPackages] = useState<PackageData[]>([]);
@@ -18,7 +19,7 @@ export default function PackageManager() {
 
   const fetchPackages = async () => {
     try {
-      const response = await fetch('/api/admin/packages');
+      const response = await apiFetch('/admin/packages');
       const data = await response.json();
       if (data.success) {
         setPackages(data.packages);
@@ -52,7 +53,7 @@ export default function PackageManager() {
     }
 
     try {
-      const response = await fetch(`/api/admin/packages/${id}`, {
+      const response = await apiFetch(`/admin/packages/${id}`, {
         method: 'DELETE',
       });
 
