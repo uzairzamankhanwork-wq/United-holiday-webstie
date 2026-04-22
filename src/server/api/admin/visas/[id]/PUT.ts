@@ -1,68 +1,63 @@
 import type { Request, Response } from 'express';
 import { db } from '../../../../db/client.js';
 import { visas } from '../../../../db/schema.js';
-import { eq } from 'drizzle-orm';
 
 /**
- * PUT /api/admin/visas/:id
- * Update a visa service with all details
+ * POST /api/admin/visas
+ * Create a new visa service
  */
 export default async function handler(req: Request, res: Response) {
   try {
-    const { id } = req.params;
-    const { 
-      title, 
-      description, 
-      countries, 
-      processingTime, 
-      validity, 
-      stayDuration, 
+    const {
+      visaId,
+      title,
+      description,
+      countries,
+      processingTime,
+      validity,
+      stayDuration,
       price,
       image,
       requiredDocuments,
       applicationProcess,
-      faqs
+      faqs,
     } = req.body;
 
-    if (!title || !description || !countries || !processingTime || !validity || !stayDuration || !price) {
-      return res.status(400).json({ 
-        success: false, 
-        error: 'Missing required fields' 
+    // Validate required fields
+    if (!visaId || !title || !description || !countries || !processingTime || !validity || !stayDuration || !price || !image) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing required fields',
       });
     }
 
-    // Update the visa with all fields
-    await db
-      .update(visas)
-      .set({
-        title,
-        description,
-        countries,
-        processingTime,
-        validity,
-        stayDuration,
-        price,
-        image: image || '/airo-assets/images/visa/default',
-        requiredDocuments: requiredDocuments || [],
-        applicationProcess: applicationProcess || [],
-        faqs: faqs || [],
-      })
-      .where(eq(visas.id, parseInt(id)));
+    // Insert new visa
+    const result = await db.insert(visas).values({
+      visaId,
+      title,
+      description,
+      countries,
+      processingTime,
+      validity,
+      stayDuration,
+      price,
+      image,
+      requiredDocuments: requiredDocuments || [],
+      applicationProcess: applicationProcess || [],
+      faqs: faqs || [],
+    });
 
-    // Fetch updated visa
-    const updated = await db
-      .select()
-      .from(visas)
-      .where(eq(visas.id, parseInt(id)))
-      .limit(1);
-
-    res.json({ success: true, visa: updated[0] });
+    res.status(201).json({
+      success: true,
+      message: 'Visa created successfully',
+      visaId: result[0].insertId,
+    });
   } catch (error) {
-    console.error('Error updating visa:', error);
-    res.status(500).json({ 
-      success: false, 
-      error: 'Failed to update visa', 
-      message: String(error) 
+    console.error('Error creating visa:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to create visa',
+      message: String(error),
     });
   }
 }

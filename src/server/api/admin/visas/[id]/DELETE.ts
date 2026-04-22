@@ -1,35 +1,62 @@
 import type { Request, Response } from 'express';
 import { db } from '../../../../db/client.js';
 import { visas } from '../../../../db/schema.js';
-import { eq } from 'drizzle-orm';
 
 /**
- * DELETE /api/admin/visas/:id
- * Delete a visa service
+ * POST /api/admin/visas
+ * Create a new visa service
  */
 export default async function handler(req: Request, res: Response) {
   try {
-    const { id } = req.params;
+    const {
+      visaId,
+      title,
+      description,
+      countries,
+      processingTime,
+      validity,
+      stayDuration,
+      price,
+      image,
+      requiredDocuments,
+      applicationProcess,
+      faqs,
+    } = req.body;
 
-    if (!id) {
+    // Validate required fields
+    if (!visaId || !title || !description || !countries || !processingTime || !validity || !stayDuration || !price || !image) {
       return res.status(400).json({
         success: false,
-        error: 'Visa ID is required',
+        error: 'Missing required fields',
       });
     }
 
-    // Delete the visa
-    await db.delete(visas).where(eq(visas.id, parseInt(id)));
+    // Insert new visa
+    const result = await db.insert(visas).values({
+      visaId,
+      title,
+      description,
+      countries,
+      processingTime,
+      validity,
+      stayDuration,
+      price,
+      image,
+      requiredDocuments: requiredDocuments || [],
+      applicationProcess: applicationProcess || [],
+      faqs: faqs || [],
+    });
 
-    res.json({
+    res.status(201).json({
       success: true,
-      message: 'Visa deleted successfully',
+      message: 'Visa created successfully',
+      visaId: result[0].insertId,
     });
   } catch (error) {
-    console.error('Error deleting visa:', error);
+    console.error('Error creating visa:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to delete visa',
+      error: 'Failed to create visa',
       message: String(error),
     });
   }

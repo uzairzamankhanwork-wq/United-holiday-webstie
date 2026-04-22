@@ -14,7 +14,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4">United Holidays</h3>
+            <div className="flex items-center gap-2 mb-4">
+              <img src="/logo.png" alt="United Holidays Logo" className="h-10 sm:h-12 w-auto object-contain bg-white rounded p-1" />
+            </div>
             <p className="text-sm text-primary-foreground/80 mb-4">
               Your trusted UK travel agency for unforgettable journeys worldwide.
             </p>

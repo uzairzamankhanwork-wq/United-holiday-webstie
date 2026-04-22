@@ -73,3 +73,5 @@ pids
 
 # Import temporary files
 .import-*
+
+.vercel

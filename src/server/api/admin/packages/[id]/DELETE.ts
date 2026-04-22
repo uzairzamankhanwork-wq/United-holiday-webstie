@@ -1,35 +1,64 @@
 import type { Request, Response } from 'express';
 import { db } from '../../../../db/client.js';
 import { packages } from '../../../../db/schema.js';
-import { eq } from 'drizzle-orm';
 
 /**
- * DELETE /api/admin/packages/:id
- * Delete a travel package
+ * POST /api/admin/packages
+ * Create a new travel package
  */
 export default async function handler(req: Request, res: Response) {
   try {
-    const { id } = req.params;
+    const {
+      packageId,
+      name,
+      location,
+      price,
+      rating,
+      duration,
+      groupSize,
+      description,
+      image,
+      highlights,
+      itinerary,
+      included,
+      notIncluded,
+    } = req.body;
 
-    if (!id) {
+    // Validate required fields
+    if (!packageId || !name || !location || !price || !rating || !duration || !groupSize || !description || !image) {
       return res.status(400).json({
         success: false,
-        error: 'Package ID is required',
+        error: 'Missing required fields',
       });
     }
 
-    // Delete the package
-    await db.delete(packages).where(eq(packages.id, parseInt(id)));
+    // Insert new package
+    const result = await db.insert(packages).values({
+      packageId,
+      name,
+      location,
+      price: parseInt(price),
+      rating: rating.toString(),
+      duration,
+      groupSize,
+      description,
+      image,
+      highlights: highlights || [],
+      itinerary: itinerary || [],
+      included: included || [],
+      notIncluded: notIncluded || [],
+    });
 
-    res.json({
+    res.status(201).json({
       success: true,
-      message: 'Package deleted successfully',
+      message: 'Package created successfully',
+      packageId: result[0].insertId,
     });
   } catch (error) {
-    console.error('Error deleting package:', error);
+    console.error('Error creating package:', error);
     res.status(500).json({
       success: false,
-      error: 'Failed to delete package',
+      error: 'Failed to create package',
       message: String(error),
     });
   }

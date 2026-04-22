@@ -23,9 +23,8 @@ export default function Header() {
         <div className="flex h-16 sm:h-20 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="text-xl sm:text-2xl font-bold text-primary">
-              United Holidays
-            </div>
+            <img src="/logo.png" alt="United Holidays Logo" className="h-12 sm:h-16 w-auto object-contain" />
+
           </Link>
 
           {/* Desktop Navigation */}

@@ -5,19 +5,14 @@
 
 import { drizzle } from 'drizzle-orm/mysql2';
 import mysql from 'mysql2/promise';
-import { getDatabaseCredentials } from './config';
 import * as schema from './schema';
 
-// Get database configuration
-const dbConfig = getDatabaseCredentials();
-
-// Create MySQL connection pool with SSL enabled
 const poolConnection = mysql.createPool({
-  host: dbConfig.host,
-  port: dbConfig.port,
-  user: dbConfig.user,
-  password: dbConfig.password,
-  database: dbConfig.database,
+  host: process.env.DB_HOST || 'localhost',
+  port: parseInt(process.env.DB_PORT || '3306', 10),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   ssl: {
     rejectUnauthorized: false,
   },

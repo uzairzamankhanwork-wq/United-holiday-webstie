@@ -106,7 +106,7 @@ export default async function handler(req: Request, res: Response) {
         processingTime: '15-20 working days',
         validity: 'Up to 5 years (multiple entry)',
         stayDuration: '90 days within 180 days',
-        price: 'From £150',
+        price: 'From Â£150',
         image: '/airo-assets/images/visa/schengen',
       },
       {
@@ -117,7 +117,7 @@ export default async function handler(req: Request, res: Response) {
         processingTime: '3-4 weeks',
         validity: '6 months to 10 years',
         stayDuration: '6 months per visit',
-        price: 'From £115',
+        price: 'From Â£115',
         image: '/airo-assets/images/visa/uk',
       },
       {
@@ -128,7 +128,7 @@ export default async function handler(req: Request, res: Response) {
         processingTime: '2-4 weeks',
         validity: 'Up to 10 years',
         stayDuration: 'Up to 6 months per entry',
-        price: 'From £185',
+        price: 'From Â£185',
         image: '/airo-assets/images/visa/usa',
       },
       {
@@ -139,7 +139,7 @@ export default async function handler(req: Request, res: Response) {
         processingTime: '2-4 weeks',
         validity: 'Up to 10 years',
         stayDuration: 'Up to 6 months per visit',
-        price: 'From £100',
+        price: 'From Â£100',
         image: '/airo-assets/images/visa/canada',
       },
       {
@@ -150,7 +150,7 @@ export default async function handler(req: Request, res: Response) {
         processingTime: '24-48 hours',
         validity: '180 days',
         stayDuration: '90 days within 180 days',
-        price: 'From £50',
+        price: 'From Â£50',
         image: '/airo-assets/images/visa/turkey',
       },
       {
@@ -161,7 +161,7 @@ export default async function handler(req: Request, res: Response) {
         processingTime: '1-2 weeks',
         validity: '90 days',
         stayDuration: '90 days',
-        price: 'From £60',
+        price: 'From Â£60',
         image: '/airo-assets/images/visa/morocco',
       },
       {
@@ -172,7 +172,7 @@ export default async function handler(req: Request, res: Response) {
         processingTime: '3-5 working days',
         validity: '90 days',
         stayDuration: '30 days',
-        price: 'From £25',
+        price: 'From Â£25',
         image: '/airo-assets/images/visa/azerbaijan',
       },
       {
@@ -183,7 +183,7 @@ export default async function handler(req: Request, res: Response) {
         processingTime: '1-2 weeks',
         validity: '30-90 days',
         stayDuration: 'As per package',
-        price: 'Package from £749',
+        price: 'Package from Â£749',
         image: '/assets/umrah-hajj.jpg',
       },
     ];
